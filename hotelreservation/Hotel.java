@@ -1,5 +1,8 @@
 package com.hotelreservation;
 
+import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
+
 public class Hotel {
    private String name;
    private double rate;
@@ -24,6 +27,13 @@ public double getRate() {
 
 public void setRate(double rate) {
 	this.rate = rate;
+}
+
+public double claculateTotalRate(LocalDate startTime , LocalDate endTime) {
+	
+	long days = ChronoUnit.DAYS.between(startTime, endTime);
+	
+	return days * rate;
 }
 
 @Override
