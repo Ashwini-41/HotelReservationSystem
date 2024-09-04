@@ -12,17 +12,13 @@ public class HotelReservationSystem {
 		this.hotels = new ArrayList<>();
 	}
 	
-	public void addHotel(String name, double rate) {
-		Hotel hotel = new Hotel(name,rate);
+	public void addHotel(String name, double weekDayrate, double weekendDayrate) {
+		Hotel hotel = new Hotel(name, weekDayrate,weekendDayrate);
 		hotels.add(hotel);
 	}
 	
 	public Hotel findcheapestHotel(LocalDate startTime, LocalDate endTime) {
-		
-//		return hotels.stream()
-//				.min(hotel1 , hotel2) -> {
-//					
-//				}
+
 		Hotel chepestHotel = null;
 		double minRate = Double.MAX_VALUE;
 		for(Hotel hotel : hotels) {

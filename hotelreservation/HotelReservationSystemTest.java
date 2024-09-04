@@ -15,9 +15,9 @@ class HotelReservationSystemTest {
 	@BeforeEach
 	public void setUp() {
 		hotelreservation = new HotelReservationSystem();
-		hotelreservation.addHotel("vedant", 220);
-		hotelreservation.addHotel("likehood", 100);
-		hotelreservation.addHotel("bridgehood", 300);
+		hotelreservation.addHotel("vedant", 200,90);
+		hotelreservation.addHotel("likehood", 100,50);
+		hotelreservation.addHotel("bridgehood", 300,40);
 		
 	}
 
@@ -27,12 +27,15 @@ class HotelReservationSystemTest {
 	    
 		List<Hotel> hotels = hotelreservation.getHotel();
 		
-		assertEquals(3,hotels.size());
+         assertEquals(3,hotels.size());
 		assertEquals("likehood",hotels.get(1).getName());
-		assertEquals(100,hotels.get(1).getRate());
+		assertEquals(100,hotels.get(1).getWeekDayrate());
+		assertEquals(50,hotels.get(1).getWeekendDayrate());
 		
 		assertEquals("bridgehood",hotels.get(2).getName());
-		assertEquals(300,hotels.get(2).getRate());
+		assertEquals(300,hotels.get(2).getWeekDayrate());
+		assertEquals(40,hotels.get(2).getWeekendDayrate());
+
 		
 		
 	} 
@@ -40,14 +43,14 @@ class HotelReservationSystemTest {
 	@Test
 	
 	void testfindChepestHotel() {
-		LocalDate startDate = LocalDate.of(2024, 9,15);
-		LocalDate endDate = LocalDate.of(2024, 9,30);
+		LocalDate startDate = LocalDate.of(2024, 9,7);
+		LocalDate endDate = LocalDate.of(2024, 9,8);
 		
 		Hotel chepestHotel = hotelreservation.findcheapestHotel(startDate, endDate);
 		
 		assertNotNull(chepestHotel);
 		assertEquals("likehood",chepestHotel.getName());
-		assertEquals(1500,chepestHotel.claculateTotalRate(startDate, endDate));
+		assertEquals(200,chepestHotel.claculateTotalRate(startDate, endDate));
 		
 	}
 	
