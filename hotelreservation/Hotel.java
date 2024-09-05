@@ -9,13 +9,17 @@ public class Hotel {
    private String name;
    private double weekDayrate;
    private double weekendDayrate;
+   private double rewardWeekdayRate;
+   private double rewardWeekendRate;
    private int rating;
    
-   public Hotel(String name, double weekDayrate,double weekendDayrate , int rating) {
+   public Hotel(String name, double weekDayrate,double weekendDayrate , double rewardWeekdayRate,double rewardWeekendRate, int rating) {
 	super();
 	this.name = name;
 	this.weekDayrate = weekDayrate;
 	this.weekendDayrate = weekendDayrate;
+	this.rewardWeekdayRate = rewardWeekdayRate;
+	this.rewardWeekendRate = rewardWeekendRate;
 	this.rating = rating;
    }
 
@@ -32,15 +36,24 @@ public double getWeekDayrate() {
 
 
 
+
 public double getWeekendDayrate() {
 	return weekendDayrate;
+}
+
+public double getRewardWeekendRate() {
+	return rewardWeekendRate;
+}
+
+public double getRewardWeekdayRate() {
+	return rewardWeekdayRate;
 }
 
 public int getRating() {
 	return rating;
 }
 
-public double claculateTotalRate(LocalDate startDate , LocalDate endDate) {
+public double claculateTotalRate(LocalDate startDate , LocalDate endDate ,boolean isRewardCustomer) {
 	
 	//long totaldays = ChronoUnit.DAYS.between(startDate, endDate) + 1;
 	double totalRate = 0.0;
@@ -49,26 +62,31 @@ public double claculateTotalRate(LocalDate startDate , LocalDate endDate) {
 			
 	  while(!date.isAfter(endDate)) { 
 		
-		if(isWeekend(date)) {
-			totalRate = totalRate + weekDayrate;
-			
-		}else {
-			totalRate = totalRate + weekendDayrate;
-		}
-		date = date.plusDays(1);
+		  boolean isWeekend = date.getDayOfWeek() == DayOfWeek.SATURDAY || 
+				  date.getDayOfWeek() == DayOfWeek.SUNDAY;
+		  
+		  if(isRewardCustomer) {
+			  totalRate +=  isWeekend ? rewardWeekendRate :rewardWeekdayRate;
+		  }else {
+			  totalRate +=  isWeekend ? weekendDayrate :weekDayrate;
+		  }
+		  
+		  date = date.plusDays(1);
+		  
 	}
 	  return totalRate;
 	
 }
 
+/*
 private boolean isWeekend(LocalDate date) {
 	DayOfWeek day = date.getDayOfWeek();
     return day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY;
-}
+} */
 
 @Override
 public String toString() {
-	return "Hotel [name=" + name + ", weekDayrate=" + weekDayrate + ", weekendDayrate=" + weekendDayrate + "Rating= " + rating +" ]";
+	return "Hotel [name=" + name + ", weekDayrate=" + weekDayrate + ", weekendDayrate=" + weekendDayrate + "rewardWeekdayRate= " +rewardWeekdayRate + "rewardWeekendRate= " + rewardWeekendRate + "Rating= " + rating +" ]";
 }
 
 

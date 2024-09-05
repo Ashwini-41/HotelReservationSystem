@@ -12,12 +12,12 @@ public class HotelReservationSystem {
 		this.hotels = new ArrayList<>();
 	}
 	
-	public void addHotel(String name, double weekDayrate, double weekendDayrate , int rating) {
-		Hotel hotel = new Hotel(name, weekDayrate,weekendDayrate ,rating);
+	public void addHotel(String name, double weekDayrate, double weekendDayrate ,double rewardWeekdayRate,double rewardWeekendRate, int rating) {
+		Hotel hotel = new Hotel(name, weekDayrate,weekendDayrate ,rewardWeekdayRate,rewardWeekendRate,rating);
 		hotels.add(hotel);
 	}
 	
-	public List<Hotel> highestRatedHotel(LocalDate startTime, LocalDate endTime){
+	public List<Hotel> highestRatedHotel(LocalDate startTime, LocalDate endTime , boolean isRewardCustomer){
 		int highestRating = Integer.MIN_VALUE;
 		List<Hotel> HighRatedcheapestHotel = new ArrayList<>();
 		
@@ -35,12 +35,12 @@ public class HotelReservationSystem {
 		
 	}
 	
-	public List<Hotel> findcheapestHotel(LocalDate startTime, LocalDate endTime) {
+	public List<Hotel> findcheapestHotel(LocalDate startTime, LocalDate endTime , boolean isRewardCustomer) {
 
 		List<Hotel> chepestHotel = new ArrayList<>();
 		double minRate = Double.MAX_VALUE;
 		for(Hotel hotel : hotels) {
-			double totalRate = hotel.claculateTotalRate(startTime, endTime);
+			double totalRate = hotel.claculateTotalRate(startTime, endTime ,isRewardCustomer);
 			
 			if(totalRate < minRate) {
 				minRate = totalRate;
