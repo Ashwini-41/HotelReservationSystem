@@ -32,9 +32,21 @@ public class HotelReservationSystem {
 				chepestHotel.add(hotel);
 			}
 		}
-		return chepestHotel;
-	
+		//return chepestHotel;
+		int highestRating = Integer.MIN_VALUE;
+		List<Hotel> HighRatedcheapestHotel = new ArrayList<>();
 		
+		for(Hotel hotel : chepestHotel) {
+			if(hotel.getRating() > highestRating) {
+				highestRating = hotel.getRating();
+				HighRatedcheapestHotel.clear();
+				HighRatedcheapestHotel.add(hotel);
+			}else if(highestRating == hotel.getRating() ) {
+				HighRatedcheapestHotel.add(hotel);
+			}
+		}
+	
+		return HighRatedcheapestHotel;
 		
 	}
 	

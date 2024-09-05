@@ -48,21 +48,17 @@ class HotelReservationSystemTest {
 		LocalDate startDate = LocalDate.of(2020, 9,11);//friday
 		LocalDate endDate = LocalDate.of(2020, 9,12);//saturday
 		
-		List<Hotel> chepestHotel = hotelreservation.findcheapestHotel(startDate, endDate);
+		List<Hotel> bestratedchepestHotel = hotelreservation.findcheapestHotel(startDate, endDate);
 		
-		assertNotNull(chepestHotel);
-		assertEquals(2,chepestHotel.size());
+		assertNotNull(bestratedchepestHotel);
+		assertEquals(1,bestratedchepestHotel.size());
 		
-		assertTrue(chepestHotel.stream().anyMatch(hotel -> hotel.getName().equals("vedant")));
-		assertTrue(chepestHotel.stream().anyMatch(hotel -> hotel.getName().equals("likehood")));
+		assertTrue(bestratedchepestHotel.stream().anyMatch(hotel -> hotel.getName().equals("vedant")));
+		assertEquals("vedant" , bestratedchepestHotel.get(0).getName());
+		assertEquals(4,bestratedchepestHotel.get(0).getRating());
+		assertEquals(300,bestratedchepestHotel.get(0).claculateTotalRate(startDate, endDate));
+		
 
-		Hotel vedant = chepestHotel.stream().filter(h -> h.getName().equals("vedant")).findFirst().get();
-		assertEquals(300,vedant.claculateTotalRate(startDate, endDate));
-		
-		Hotel likehood = chepestHotel.stream().filter(h -> h.getName().equals("likehood")).findFirst().get();
-		assertEquals(300,likehood.claculateTotalRate(startDate, endDate));
-		
-		assertFalse(chepestHotel.stream().anyMatch(hotel -> hotel.getName().equals("bridgehood")));
 
 	}
 	
