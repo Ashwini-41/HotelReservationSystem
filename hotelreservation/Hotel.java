@@ -9,12 +9,14 @@ public class Hotel {
    private String name;
    private double weekDayrate;
    private double weekendDayrate;
+   private int rating;
    
-   public Hotel(String name, double weekDayrate,double weekendDayrate) {
+   public Hotel(String name, double weekDayrate,double weekendDayrate , int rating) {
 	super();
 	this.name = name;
 	this.weekDayrate = weekDayrate;
 	this.weekendDayrate = weekendDayrate;
+	this.rating = rating;
    }
 
 
@@ -32,6 +34,10 @@ public double getWeekDayrate() {
 
 public double getWeekendDayrate() {
 	return weekendDayrate;
+}
+
+public int getRating() {
+	return rating;
 }
 
 public double claculateTotalRate(LocalDate startDate , LocalDate endDate) {
@@ -62,7 +68,7 @@ private boolean isWeekend(LocalDate date) {
 
 @Override
 public String toString() {
-	return "Hotel [name=" + name + ", weekDayrate=" + weekDayrate + ", weekendDayrate=" + weekendDayrate + "]";
+	return "Hotel [name=" + name + ", weekDayrate=" + weekDayrate + ", weekendDayrate=" + weekendDayrate + "Rating= " + rating +" ]";
 }
 
 

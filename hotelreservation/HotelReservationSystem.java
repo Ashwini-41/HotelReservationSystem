@@ -12,8 +12,8 @@ public class HotelReservationSystem {
 		this.hotels = new ArrayList<>();
 	}
 	
-	public void addHotel(String name, double weekDayrate, double weekendDayrate) {
-		Hotel hotel = new Hotel(name, weekDayrate,weekendDayrate);
+	public void addHotel(String name, double weekDayrate, double weekendDayrate , int rating) {
+		Hotel hotel = new Hotel(name, weekDayrate,weekendDayrate ,rating);
 		hotels.add(hotel);
 	}
 	

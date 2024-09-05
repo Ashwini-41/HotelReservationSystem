@@ -15,9 +15,9 @@ class HotelReservationSystemTest {
 	@BeforeEach
 	public void setUp() {
 		hotelreservation = new HotelReservationSystem();
-		hotelreservation.addHotel("vedant", 200,100);
-		hotelreservation.addHotel("likehood", 250,50);
-		hotelreservation.addHotel("bridgehood", 300,40);
+		hotelreservation.addHotel("vedant", 200,100,4);
+		hotelreservation.addHotel("likehood", 250,50,3);
+		hotelreservation.addHotel("bridgehood", 300,40,2);
 		
 	}
 
@@ -31,10 +31,12 @@ class HotelReservationSystemTest {
 		assertEquals("likehood",hotels.get(1).getName());
 		assertEquals(250,hotels.get(1).getWeekDayrate());
 		assertEquals(50,hotels.get(1).getWeekendDayrate());
+		assertEquals(3,hotels.get(1).getRating()); //check rating
 		
 		assertEquals("bridgehood",hotels.get(2).getName());
 		assertEquals(300,hotels.get(2).getWeekDayrate());
 		assertEquals(40,hotels.get(2).getWeekendDayrate());
+		assertEquals(2,hotels.get(2).getRating()); //check rating
 
 		
 		
