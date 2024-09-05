@@ -17,16 +17,19 @@ public class HotelReservationSystem {
 		hotels.add(hotel);
 	}
 	
-	public Hotel findcheapestHotel(LocalDate startTime, LocalDate endTime) {
+	public List<Hotel> findcheapestHotel(LocalDate startTime, LocalDate endTime) {
 
-		Hotel chepestHotel = null;
+		List<Hotel> chepestHotel = new ArrayList<>();
 		double minRate = Double.MAX_VALUE;
 		for(Hotel hotel : hotels) {
 			double totalRate = hotel.claculateTotalRate(startTime, endTime);
 			
 			if(totalRate < minRate) {
 				minRate = totalRate;
-				chepestHotel = hotel;
+				chepestHotel.clear();
+				chepestHotel.add(hotel);
+			}else if(totalRate == minRate) {
+				chepestHotel.add(hotel);
 			}
 		}
 		return chepestHotel;
