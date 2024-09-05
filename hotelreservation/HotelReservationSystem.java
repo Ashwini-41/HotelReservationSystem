@@ -17,7 +17,23 @@ public class HotelReservationSystem {
 		hotels.add(hotel);
 	}
 	
+	public void validInput(LocalDate startTime, LocalDate endTime , boolean isRewardCustomer) throws InvalidInputException{
+		if(startTime == null || endTime == null) {
+			throw new InvalidInputException("Start date and End date cannot be null");
+		}
+		
+		if(startTime.isAfter(endTime)) {
+			throw new InvalidInputException("Start date must be before or equal to the end date.");
+			
+		}
+		
+		if(!isRewardCustomer && isRewardCustomer) {
+			throw new InvalidInputException("Invalid customer type");
+		}
+	}
+	
 	public List<Hotel> highestRatedHotel(LocalDate startTime, LocalDate endTime , boolean isRewardCustomer){
+		
 		int highestRating = Integer.MIN_VALUE;
 		List<Hotel> HighRatedcheapestHotel = new ArrayList<>();
 		
@@ -35,8 +51,8 @@ public class HotelReservationSystem {
 		
 	}
 	
-	public List<Hotel> findcheapestHotel(LocalDate startTime, LocalDate endTime , boolean isRewardCustomer) {
-
+	public List<Hotel> findcheapestHotel(LocalDate startTime, LocalDate endTime , boolean isRewardCustomer) throws InvalidInputException {
+		validInput(startTime,endTime,isRewardCustomer);
 		List<Hotel> chepestHotel = new ArrayList<>();
 		double minRate = Double.MAX_VALUE;
 		for(Hotel hotel : hotels) {
