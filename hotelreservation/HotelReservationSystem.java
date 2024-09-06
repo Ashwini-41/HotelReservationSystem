@@ -2,12 +2,14 @@ package com.hotelreservation;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HotelReservationSystem {
           
 	private List<Hotel> hotels;
-	
+		
 	public HotelReservationSystem() {
 		this.hotels = new ArrayList<>();
 	}
@@ -17,6 +19,7 @@ public class HotelReservationSystem {
 		hotels.add(hotel);
 	}
 	
+
 	public void validInput(LocalDate startTime, LocalDate endTime , boolean isRewardCustomer) throws InvalidInputException{
 		if(startTime == null || endTime == null) {
 			throw new InvalidInputException("Start date and End date cannot be null");
@@ -51,38 +54,21 @@ public class HotelReservationSystem {
 		
 	}
 	
-	public List<Hotel> findcheapestHotel(LocalDate startTime, LocalDate endTime , boolean isRewardCustomer) throws InvalidInputException {
+	//find best rated cheapest hotel using stream
+	public List<Hotel> findBestRatedCheapestHotel(LocalDate startTime, LocalDate endTime , boolean isRewardCustomer) throws InvalidInputException{
 		validInput(startTime,endTime,isRewardCustomer);
-		List<Hotel> chepestHotel = new ArrayList<>();
-		double minRate = Double.MAX_VALUE;
-		for(Hotel hotel : hotels) {
-			double totalRate = hotel.claculateTotalRate(startTime, endTime ,isRewardCustomer);
-			
-			if(totalRate < minRate) {
-				minRate = totalRate;
-				chepestHotel.clear();
-				chepestHotel.add(hotel);
-			}else if(totalRate == minRate) {
-				chepestHotel.add(hotel);
-			}
-		}
-		//return chepestHotel;
 		
-		int highestRating = Integer.MIN_VALUE;
-		List<Hotel> HighRatedcheapestHotel = new ArrayList<>();
-		
-		for(Hotel hotel : chepestHotel) {
-			if(hotel.getRating() > highestRating) {
-				highestRating = hotel.getRating();
-				HighRatedcheapestHotel.clear();
-				HighRatedcheapestHotel.add(hotel);
-			}else if(highestRating == hotel.getRating() ) {
-				HighRatedcheapestHotel.add(hotel);
-			}
-		}
+		List<Hotel> bestRatedCheapestHotels = hotels.stream()
+				.sorted(Comparator.comparingDouble(hotel -> hotel.claculateTotalRate(startTime, endTime, isRewardCustomer)))
+				.filter(hotel -> hotel.claculateTotalRate(startTime, endTime, isRewardCustomer) == hotels.stream()
+				     .mapToDouble(h -> h.claculateTotalRate(startTime, endTime, isRewardCustomer))
+				     .min()
+				     .orElse(Double.MAX_VALUE))
+				.sorted(Comparator.comparing(Hotel::getRating).reversed())
+				.collect(Collectors.toList());
 	
-		return HighRatedcheapestHotel;
-		
+		return bestRatedCheapestHotels;
+
 	}
 	
 	public List<Hotel> getHotel() {
