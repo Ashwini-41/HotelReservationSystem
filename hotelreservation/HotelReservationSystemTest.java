@@ -18,6 +18,8 @@ class HotelReservationSystemTest {
 		hotelreservation.addHotel("vedant", 200,100,80,80,4);
 		hotelreservation.addHotel("likehood", 250,50,110,90,3);
 		hotelreservation.addHotel("bridgehood", 300,40,120,80,5);
+		hotelreservation.addHotel("Ridgewood", 250,60,80,80,2);
+		
 		
 	}
 	
@@ -36,13 +38,28 @@ class HotelReservationSystemTest {
      	assertEquals(160,rewardbestratedchepestHotel.get(0).claculateTotalRate(startDate, endDate, true));
 	}
 
+	@Test
+	void testregularCustomerCheapestHotel1() throws InvalidInputException {
+		//List<Hotel> hotels = hotelreservation.getHotel();
+		LocalDate startDate = LocalDate.of(2020, 9,11);//friday
+		LocalDate endDate = LocalDate.of(2020,9,12);//saturday
+		
+		List<Hotel> rewardbestratedchepestHotel = hotelreservation.findBestRatedCheapestHotel(startDate, endDate,false);
+		
+     	assertNotNull(rewardbestratedchepestHotel);
+     	assertEquals(1,rewardbestratedchepestHotel.size());
+     	assertEquals("vedant",rewardbestratedchepestHotel.get(0).getName());
+     	assertEquals(300,rewardbestratedchepestHotel.get(0).claculateTotalRate(startDate, endDate, false));
+//     	assertEquals("likehood",rewardbestratedchepestHotel.get(1).getName());
+//     	assertEquals(300,rewardbestratedchepestHotel.get(1).claculateTotalRate(startDate, endDate, false));
+	}
 	
 	@Test
 	void testAddHotel() {
 	    
 		List<Hotel> hotels = hotelreservation.getHotel();
 		
-         assertEquals(3,hotels.size());
+         assertEquals(4,hotels.size());
          
          assertEquals("vedant",hotels.get(0).getName());
  		assertEquals(200,hotels.get(0).getWeekDayrate());
@@ -92,7 +109,7 @@ class HotelReservationSystemTest {
 		List<Hotel> bestratedchepestHotel = hotelreservation.findBestRatedCheapestHotel(startDate, endDate,false);
 		
      	assertNotNull(bestratedchepestHotel);
-     	assertEquals(2,bestratedchepestHotel.size());
+     	assertEquals(1,bestratedchepestHotel.size());
 		
 		assertTrue(bestratedchepestHotel.stream().anyMatch(hotel -> hotel.getName().equals("vedant")));
 		assertEquals("vedant" , bestratedchepestHotel.get(0).getName());

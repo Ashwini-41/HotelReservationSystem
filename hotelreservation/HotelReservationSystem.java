@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class HotelReservationSystem {
           
 	private List<Hotel> hotels;
-		
+	
 	public HotelReservationSystem() {
 		this.hotels = new ArrayList<>();
 	}
@@ -65,6 +65,7 @@ public class HotelReservationSystem {
 				     .min()
 				     .orElse(Double.MAX_VALUE))
 				.sorted(Comparator.comparing(Hotel::getRating).reversed())
+				.limit(1)
 				.collect(Collectors.toList());
 	
 		return bestRatedCheapestHotels;
